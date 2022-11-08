@@ -1,0 +1,176 @@
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+
+   <!-- Page content-->
+   <section class="container mt-5 mb-lg-5 mb-4 pt-5 pb-lg-5"  *ngFor="let adv of advers">
+    <!-- Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="row gy-5 pt-lg-2">
+      <div class="col-lg-7">
+        <div class="d-flex flex-column">
+          <!-- Carousel with slides count-->
+          <div class="order-lg-1 order-2 mb-4">
+            <swiper [config]="config">
+              <div class="swiper-slide" *ngFor="let data of adv.images">
+                <div><img class="rounded-3" src="{{data.image}}" alt="Image"></div>
+              </div>
+              <!-- <div>
+                <div class="ratio ratio-16x9">
+                  <youtube-player [videoId]="id" (ready)="savePlayer($event)" (change)="onStateChange($event)" class="youtube-video"></youtube-player>
+                </div>
+              </div> -->
+            </swiper>
+          </div>
+          <!-- Page title + Features-->
+          <div class="order-lg-2 order-1">
+            <h1 class="h2 mb-2">{{adv.title}}</h1>
+            <p class="mb-2 pb-1 fs-lg">{{adv.country}} ,{{adv.city}} ,{{adv.district}} ,{{adv.street}} </p>
+            <ul class="d-flex mb-4 pb-lg-2 list-unstyled">
+              <li class="me-3 pe-3 border-end"><b class="me-1">{{adv.n_rooms}}</b><i class="fi-bed mt-n1 lead align-middle text-muted"></i></li>
+              <li class="me-3 pe-3 border-end"><b class="me-1">{{adv.n_bath}}</b><i class="fi-bath mt-n1 lead align-middle text-muted"></i></li>
+              <li class="me-3 pe-3 border-end"><b class="me-1">{{adv.parking}}</b><i class="fi-car mt-n1 lead align-middle text-muted"></i></li>
+              <li><b>{{adv.area}} </b>sq.m</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Overview-->
+        <h2 class="h5">Overview</h2>
+        <p class="mb-4 pb-2">{{adv.descrption}}</p>
+        <!-- Rental agent-->
+        <h2 class="h5">Rental agent</h2>
+        <div class="card card-horizontal" routerLink="/vendor/properties/{{adv.user_id}}">
+          <div class="card-img-top bg-position-center-x"
+           style="background-image: url(http://127.0.0.1:8000/storage/{{adv.image}});"></div>
+          <blockquote class="blockquote card-body p-4">
+            <p class="mb-4">For more information about the owner of the advertisement, please click to go to his profile</p>
+            <footer class="d-flex justify-content-between">
+              <div class="pe-3">
+                <h6 class="mb-0">{{adv.name}}</h6>
+                <div class="text-muted fw-normal fs-sm mb-3">Imperial Property Group Agent</div><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2" href="javascript:void(0);"><i class="fi-facebook"></i></a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2" href="javascript:void(0);"><i class="fi-twitter"></i></a><a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2 mb-2" href="javascript:void(0);"><i class="fi-instagram"></i></a>
+              </div>
+              <div>
+                <ngx-stars [readonly]="true" [initialStars]="+adv.value" [color]="'#FFD700'" [size]="1"></ngx-stars>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+      <!-- Sidebar with details-->
+      <aside class="col-lg-5">
+        <div class="ps-lg-5">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div><span class="badge bg-success me-2 mb-2">{{adv.booked}}</span><span class="badge bg-info me-2 mb-2">New</span></div>
+            <div class="text-nowrap">
+              <button (click)="addtofav(adv.id)" class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2" type="button" placement="top" ngbTooltip="Add to Wishlist"><i class="fi-heart"></i></button>
+              <div class="dropdown d-inline-block" data-bs-toggle="tooltip" title="Share" placement="top" ngbTooltip="Share">
+                <button class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2" type="button" data-bs-toggle="dropdown"><i class="fi-share"></i></button>
+                <div class="dropdown-menu dropdown-menu-end my-1">
+                  <button class="dropdown-item" type="button"><i class="fi-facebook fs-base opacity-75 me-2"></i>Facebook</button>
+                  <button class="dropdown-item" type="button"><i class="fi-twitter fs-base opacity-75 me-2"></i>Twitter</button>
+                  <button class="dropdown-item" type="button"><i class="fi-instagram fs-base opacity-75 me-2"></i>Instagram</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="h5 mb-2">Monthly rent:</h3>
+          <h2 class="h3 mb-4 pb-2">{{adv.price|currency}}<span class="d-inline-block ms-1 fs-base fw-normal text-body">/month</span></h2>
+          <!-- Property details-->
+          <div class="card border-0 bg-secondary mb-4">
+            <div class="card-body">
+              <h5 class="mb-0 pb-3">Property Details</h5>
+              <ul class="list-unstyled mt-n2 mb-0">
+                <li class="mt-2 mb-0"><b>Type: </b>{{adv.type}}</li>
+                <li class="mt-2 mb-0"><b>Apartment area: </b>{{adv.area}} sq.m</li>
+                <li class="mt-2 mb-0"><b>Built: </b></li>
+                <li class="mt-2 mb-0"><b>Bedrooms: </b>{{adv.n_rooms}}</li>
+                <li class="mt-2 mb-0"><b>Bathrooms: </b>{{adv.n_bath}}</li>
+                <li class="mt-2 mb-0"><b>Parking places: </b>{{adv.parking}}</li>
+                <!-- <li class="mt-2 mb-0"><b>Pets allowed: </b></li> -->
+              </ul>
+            </div>
+          </div><a class="btn btn-lg btn-primary w-100 mb-3" href="javascript:void(0);">Book a viewing</a><a class="d-inline-block mb-4 pb-2 text-decoration-none" href="javascript:void(0);"><i class="fi-help me-2 mt-n1 align-middle"></i>Frequently asked questions</a>
+          <!-- Amenities-->
+          <div class="card border-0 bg-secondary mb-4">
+            <div class="card-body">
+              <h5>Amenities</h5>
+              <ul class="list-unstyled row row-cols-md-2 row-cols-1 gy-2 mb-0 text-nowrap">
+                <li class="col"><i class="fi-wifi mt-n1 me-2 fs-lg align-middle"></i>WiFi</li>
+                <li class="col"><i class="fi-thermometer mt-n1 me-2 fs-lg align-middle"></i>Heating</li>
+                <li class="col"><i class="fi-dish mt-n1 me-2 fs-lg align-middle"></i>Dishwasher</li>
+                <li class="col"><i class="fi-parking mt-n1 me-2 fs-lg align-middle"></i>Parking place</li>
+                <li class="col"><i class="fi-snowflake mt-n1 me-2 fs-lg align-middle"></i>Air conditioning</li>
+                <li class="col"><i class="fi-iron mt-n1 me-2 fs-lg align-middle"></i>Iron</li>
+                <li class="col"><i class="fi-tv mt-n1 me-2 fs-lg align-middle"></i>TV</li>
+                <li class="col"><i class="fi-laundry mt-n1 me-2 fs-lg align-middle"></i>Laundry</li>
+                <li class="col"><i class="fi-cctv mt-n1 me-2 fs-lg align-middle"></i>Security cameras</li>
+                <li class="col"><i class="fi-no-smoke mt-n1 me-2 fs-lg align-middle"></i>No smocking</li>
+              </ul>
+              <div class="collapse" id="seeMoreAmenities"  #firstcollapse="ngbCollapse" [(ngbCollapse)]="firstColleaps">
+                <ul class="list-unstyled row row-cols-md-2 row-cols-1 gy-2 pt-2 mb-0 text-nowrap">
+                  <li class="col"><i class="fi-double-bed mt-n1 me-2 fs-lg align-middle"></i>Double bed</li>
+                  <li class="col"><i class="fi-bed mt-n1 me-2 fs-lg align-middle"></i>Single bed</li>
+                </ul>
+              </div><a class="collapse-label collapsed d-inline-block mt-3" href="javascript:void(0);" (click)="firstcollapse.toggle()"
+              [attr.aria-expanded]="!firstColleaps" data-bs-toggle="collapse" data-bs-label-collapsed="Show more" data-bs-label-expanded="Show less" role="button" aria-expanded="false" aria-controls="seeMoreAmenities"></a>
+            </div>
+          </div>
+          <!-- Not included in rent-->
+          <div class="card border-0 bg-secondary mb-4">
+            <div class="card-body">
+              <h5>Not included in rent</h5>
+              <ul class="list-unstyled row row-cols-md-2 row-cols-1 gy-2 mb-0 text-nowrap">
+                <li class="col"><i class="fi-swimming-pool mt-n1 me-2 fs-lg align-middle"></i>Swimming pool</li>
+                <li class="col"><i class="fi-cafe mt-n1 me-2 fs-lg align-middle"></i>Restaurant</li>
+                <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>Spa lounge</li>
+                <li class="col"><i class="fi-cocktail mt-n1 me-2 fs-lg align-middle"></i>Bar</li>
+              </ul>
+            </div>
+          </div>
+          <!-- Post meta-->
+          <ul class="d-flex mb-4 list-unstyled fs-sm">
+            <li class="me-3 pe-3 border-end">Published: <b>{{adv.created_at|creat}}</b></li>
+            <li class="me-3 pe-3 border-end">Ad number: <b>{{adv.id}}</b></li>
+            <!-- <li class="me-3 pe-3">Views: <b>48</b></li> -->
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+   <!-- Recently viewed-->
+   <section class="container mb-5 pb-2 pb-lg-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h3">Recently viewed</h2><a class="btn btn-link fw-normal p-0" routerLink="/catalog/rent">View all<i class="fi-arrow-long-right ms-2"></i></a>
+    </div>
+    <div class="swiper default-swiper rounded">
+      <swiper [config]="recently">
+        <div class="swiper-slide" *ngFor="let data of recentlyData">
+          <!-- Item-->
+          <div class="col p-2">
+            <div class="card shadow-sm card-hover border-0 h-100">
+              <div class="card-img-top card-img-hover"><a class="img-overlay" routerLink="/catalog/single-v1"></a>
+                <div class="content-overlay end-0 top-0 pt-3 pe-3">
+                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" placement="left" ngbTooltip="Add to Wishlist"><i class="fi-heart"></i></button>
+                </div><img src="{{data.image}}" alt="Image">
+              </div>
+              <div class="card-body position-relative pb-3">
+                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{data.sale}}</h4>
+                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" routerLink="/catalog/single-v1">{{data.title}}</a></h3>
+                <p class="mb-2 fs-sm text-muted">{{data.content}}</p>
+                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{data.price}}</div>
+              </div>
+              <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap"><span class="d-inline-block mx-1 px-2 fs-sm">{{data.bad}}<i class="fi-bed ms-1 mt-n1 fs-lg text-muted"></i></span><span class="d-inline-block mx-1 px-2 fs-sm">{{data.bath}}<i class="fi-bath ms-1 mt-n1 fs-lg text-muted"></i></span><span class="d-inline-block mx-1 px-2 fs-sm">{{data.car}}<i class="fi-car ms-1 mt-n1 fs-lg text-muted"></i></span></div>
+            </div>
+          </div>
+          <!-- Item-->
+        </div>
+      </swiper>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  </main>
+  <!-- Footer-->
+<app-footer></app-footer>
+

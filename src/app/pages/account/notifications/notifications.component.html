@@ -1,0 +1,141 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+  <!-- Breadcrumb-->
+  <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+  <!-- Page content-->
+  <div class="row">
+    <!-- Sidebar-->
+    <aside class="col-lg-4 col-md-5 pe-xl-4 mb-5">
+      <!-- Account nav-->
+      <div class="card card-body border-0 shadow-sm pb-1 me-lg-1">
+        <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4"><img class="rounded-circle" src="assets/img/avatars/03.jpg" width="48" alt="Annette Black">
+          <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
+            <h2 class="fs-lg mb-0">Annette Black</h2><span class="star-rating"><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star-filled active"></i></span>
+            <ul class="list-unstyled fs-sm mt-3 mb-0">
+              <li><a class="nav-link fw-normal p-0" href="tel:3025550107"><i class="fi-phone opacity-60 me-2"></i>(302) 555-0107</a></li>
+              <li><a class="nav-link fw-normal p-0" href="mailto:annette_black@email.com"><i class="fi-mail opacity-60 me-2"></i>annette_black@email.com</a></li>
+            </ul>
+          </div>
+        </div><a class="btn btn-primary btn-lg w-100 mb-3" routerLink="/vendor/add-property"><i class="fi-plus me-2"></i>Add property</a><a class="btn btn-outline-secondary d-block d-md-none w-100 mb-3" href="javascript:void(0);" (click)="SideBarMenu()" data-bs-toggle="collapse"><i class="fi-align-justify me-2"></i>Menu</a>
+        <div class="collapse d-md-block mt-3" id="account-nav">
+          <div class="card-nav">
+            <a class="card-nav-link" routerLink="/account/info"><i class="fi-user opacity-60 me-2"></i>Personal Info</a>
+            <a class="card-nav-link" routerLink="/account/security"><i class="fi-lock opacity-60 me-2"></i>Password &amp; Security</a>
+            <a class="card-nav-link" routerLink="/account/properties"><i class="fi-home opacity-60 me-2"></i>My Properties</a>
+            <a class="card-nav-link" routerLink="/account/wishlist"><i class="fi-heart opacity-60 me-2"></i>Wishlist</a>
+            <a class="card-nav-link" routerLink="/account/reviews"><i class="fi-star opacity-60 me-2"></i>Reviews</a>
+            <a class="card-nav-link" routerLink="/account/req"><i class="fa fa-paper-plane-o opacity-60 me-2" aria-hidden="true"></i>Requests</a>
+
+            <a class="card-nav-link active" routerLink="/account/notifications"><i class="fi-bell opacity-60 me-2"></i>Messages</a>
+            <a class="card-nav-link" routerLink="/pages/help-center"><i class="fi-help opacity-60 me-2"></i>Help</a>
+            <a class="card-nav-link" routerLink="/auth/signin"><i class="fi-logout opacity-60 me-2"></i>Sign Out</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!-- Content-->
+    <div class="col-lg-8 col-md-7 mb-5" >
+      <div class="row rounded-lg overflow-hidden shadow" >
+        <div class="col-5 px-0">
+         <div class="bg-white">
+     
+           <div class="bg-gray px-4 py-2 bg-light">
+             <p class="h5 mb-0 py-1">Recent</p>
+           </div>
+     
+           <div class="messages-box">
+             <div class="list-group rounded-0">
+     
+     
+               <button (click)="to_user(usr.id,usr.image)"  class="list-group-item list-group-item-action list-group-item-light rounded-0"   *ngFor="let usr of users" >
+                <div class="media"><img src="{{usr.image}}" alt="user" width="50" class="rounded-circle">
+                   <div class="media-body ml-4">
+                     <div class="d-flex align-items-center justify-content-between mb-3">
+                       <h6 class="mb-0">{{usr.name}}</h6><small class="small font-weight-bold">21 Aug</small>
+                     </div>
+                     <p class="font-italic text-muted mb-0 text-small"></p>
+                   </div>
+                 </div>
+                 </button> 
+          
+                   
+     
+             </div>
+           </div>
+         </div>
+       </div>
+     
+     
+     
+     
+     
+     
+     <div class="col-7 px-0" style="overflow: scroll">
+       <div class="container">
+         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+           <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+          
+         
+           </div>
+           
+         </div>
+        
+       </div>
+     
+       <div class="px-4 py-1 chat-box bg-white"  *ngFor="let msg of messages" >
+         <!-- Sender Message-->
+         <div *ngIf="(msg.from==from&&msg.to==to)||(msg.from==to&&msg.to==from)" >
+         <div *ngIf="msg.from==to" class="media w-50 " style="margin-left:200px ;"><img src="{{this.image}}" alt="user" width="50" class="rounded-circle " >
+           <div class="media-body ml-3">
+             <div class="bg-light rounded py-2 px-3 mb-1">
+               <p class="text-small mb-0 text-muted">{{msg.message}}</p>
+             </div>
+             <p class="small text-muted">{{msg.created_at| date:'short'}}</p>
+           </div>
+         </div>
+     
+         <!-- Reciever Message-->
+         <div  *ngIf="msg.from==from"   class="media w-50 ml-auto " style="margin-left:0 ;">
+           <div class="media-body">
+             <div class="bg-primary rounded py-1 px-3 mb-1">
+               <p class="text-small mb-0 text-white">{{msg.message}}</p>
+             </div>
+             <p class="small text-muted">{{msg.created_at| date:'short'}}</p>
+           </div>
+         </div>
+       </div>
+     
+       </div>
+     
+
+
+
+       <div action="#" class="bg-light">
+        <div class="input-group">
+          <input type="text" placeholder="Type a message" [(ngModel)]="message"  aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+          <div class="input-group-append">
+            <button id="button-addon2" type="button"  (click)="submit()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+     </div>
+     </div>
+       <!-- Typing area -->
+       
+     
+     
+    </div>
+</div>
+</div>
+
+  <!-- Footer-->
+  <app-footer></app-footer>
